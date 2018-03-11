@@ -51,10 +51,12 @@ namespace os_scheduler
             //MessageBox.Show("ready to retrieve input");
             //reset
             groupBox1.Controls.Clear();
-            groupBox1.Size = new System.Drawing.Size(588 ,50);
+            groupBox1.Size = new System.Drawing.Size(588 ,100);
+            this.Size = new System.Drawing.Size(628, 318);
             //data
             List<TextBox> burst_time = new List<TextBox>();
             List<TextBox> arrival_time = new List<TextBox>();
+            List<TextBox> priority = new List<TextBox>();
 
             int x = 15, y = 20;//relative to groupBox
             Label write_bur_time = new Label();
@@ -68,6 +70,12 @@ namespace os_scheduler
             write_arrival.Size = new System.Drawing.Size(120, 13);
             write_arrival.Location = new System.Drawing.Point(x+240+10, y);
             this.groupBox1.Controls.Add(write_arrival);
+
+            Label prio = new Label();
+            prio.Text = "priority";
+            prio.Size = new System.Drawing.Size(120, 13);
+            prio.Location = new System.Drawing.Point(x + 360 + 20, y);
+            this.groupBox1.Controls.Add(prio);
 
 
             for (int i = 0; i < this.s.count; ++i)
@@ -93,8 +101,21 @@ namespace os_scheduler
                 arrival_time[i].Size = new System.Drawing.Size(120, 13);
                 this.groupBox1.Controls.Add(arrival_time[i]);
 
+                TextBox pr = new TextBox();
+                priority.Add(pr);
+                priority[i].Location = new System.Drawing.Point(x + 360 + 20, y + (i + 1) * 30);
+                priority[i].Size = new System.Drawing.Size(120, 13);
+                this.groupBox1.Controls.Add(priority[i]);
+
                 groupBox1.Size = new System.Drawing.Size(groupBox1.Size.Width, groupBox1.Size.Height + 30);
+                this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + 30);
             }
+            y += (this.s.count+1)*30;
+            Label quan = new Label();
+            quan.Text = "quantum:";
+            quan.Size = new System.Drawing.Size(120, 13);
+            quan.Location = new System.Drawing.Point(x, y);
+            this.groupBox1.Controls.Add(quan);
         }
     }
 }
