@@ -13,6 +13,10 @@ namespace os_scheduler
     public partial class Form1 : Form
     {
         private scheduler s = new scheduler();
+        List<TextBox> burst_time = new List<TextBox>();
+        List<TextBox> arrival_time = new List<TextBox>();
+        List<TextBox> priority = new List<TextBox>();
+        TextBox rr_quan = new TextBox();
         public Form1()
         {
             InitializeComponent();
@@ -51,30 +55,31 @@ namespace os_scheduler
             //MessageBox.Show("ready to retrieve input");
             //reset
             groupBox1.Controls.Clear();
-            groupBox1.Size = new System.Drawing.Size(588 ,100);
+            groupBox1.Size = new System.Drawing.Size(588, 160);
             this.Size = new System.Drawing.Size(628, 318);
-            //data
-            List<TextBox> burst_time = new List<TextBox>();
-            List<TextBox> arrival_time = new List<TextBox>();
-            List<TextBox> priority = new List<TextBox>();
+            burst_time.Clear();
+            arrival_time.Clear();
+            priority.Clear();
+            rr_quan.Enabled = true;
 
             int x = 15, y = 20;//relative to groupBox
-            Label write_bur_time = new Label();
-            write_bur_time.Text = "burst time";
-            write_bur_time.Size = new System.Drawing.Size(120,13);
-            write_bur_time.Location = new System.Drawing.Point(x+120, y);
-            this.groupBox1.Controls.Add(write_bur_time);
 
             Label write_arrival = new Label();
             write_arrival.Text = "arrival time";
             write_arrival.Size = new System.Drawing.Size(120, 13);
-            write_arrival.Location = new System.Drawing.Point(x+240+10, y);
+            write_arrival.Location = new System.Drawing.Point(x+360+20, y);
             this.groupBox1.Controls.Add(write_arrival);
+
+            Label write_bur_time = new Label();
+            write_bur_time.Text = "burst time";
+            write_bur_time.Size = new System.Drawing.Size(120, 13);
+            write_bur_time.Location = new System.Drawing.Point(x + 120, y);
+            this.groupBox1.Controls.Add(write_bur_time);
 
             Label prio = new Label();
             prio.Text = "priority";
             prio.Size = new System.Drawing.Size(120, 13);
-            prio.Location = new System.Drawing.Point(x + 360 + 20, y);
+            prio.Location = new System.Drawing.Point(x + 240 + 10, y);
             this.groupBox1.Controls.Add(prio);
 
 
@@ -95,17 +100,18 @@ namespace os_scheduler
                 burst_time[i].Size = new System.Drawing.Size(120, 13);
                 this.groupBox1.Controls.Add(burst_time[i]);
 
+                TextBox pr = new TextBox();
+                priority.Add(pr);
+                priority[i].Location = new System.Drawing.Point(x + 240 + 10, y + (i + 1) * 30);
+                priority[i].Size = new System.Drawing.Size(120, 13);
+                this.groupBox1.Controls.Add(priority[i]);
+
                 TextBox arr = new TextBox();
                 arrival_time.Add(arr);
-                arrival_time[i].Location = new System.Drawing.Point(x + 240+10, y + (i + 1) * 30);
+                arrival_time[i].Location = new System.Drawing.Point(x + 360+20, y + (i + 1) * 30);
                 arrival_time[i].Size = new System.Drawing.Size(120, 13);
                 this.groupBox1.Controls.Add(arrival_time[i]);
 
-                TextBox pr = new TextBox();
-                priority.Add(pr);
-                priority[i].Location = new System.Drawing.Point(x + 360 + 20, y + (i + 1) * 30);
-                priority[i].Size = new System.Drawing.Size(120, 13);
-                this.groupBox1.Controls.Add(priority[i]);
 
                 groupBox1.Size = new System.Drawing.Size(groupBox1.Size.Width, groupBox1.Size.Height + 30);
                 this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + 30);
@@ -114,8 +120,43 @@ namespace os_scheduler
             Label quan = new Label();
             quan.Text = "quantum:";
             quan.Size = new System.Drawing.Size(120, 13);
-            quan.Location = new System.Drawing.Point(x, y);
-            this.groupBox1.Controls.Add(quan);
+            quan.Location = new System.Drawing.Point(x + 10 + 240, y+10);
+            this.groupBox1.Controls.Add(quan); y += 25;
+
+            rr_quan.Location = new System.Drawing.Point(x + 10 + 240, y);y+=25;
+            rr_quan.Size = new System.Drawing.Size(120, 13);
+            this.groupBox1.Controls.Add(rr_quan);
+
+            //button Run
+            Button run = new Button();
+            run.Size = new System.Drawing.Size(120, 50);
+            run.Location = new System.Drawing.Point(x + 10 + 240, y);
+            run.Text = "Run";
+            run.Name = "run";
+            run.Click += new System.EventHandler(this.run_Click);
+            this.groupBox1.Controls.Add(run);
+
+            deactivate_unNecessary();
+        }
+
+        private void run_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Gantt chart");
+        }
+
+        private void deactivate_unNecessary()
+        {
+            if (this.s.method != "RR")
+            {
+                this.rr_quan.Enabled = false;
+            }
+            if (this.s.method != "Priority (non pre-emptive)" && this.s.method != "Priority (pre-emptive)")
+            {
+                for (int i = 0; i < s.count; ++i)
+                {
+                    priority[i].Enabled = false;
+                }
+            }
         }
     }
 }
