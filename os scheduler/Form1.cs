@@ -10,6 +10,15 @@ using System.Windows.Forms;
 
 namespace os_scheduler
 {
+    struct alaa_data
+    {
+        public int alaa_start, alaa_process_id;
+        public alaa_data(int a=0, int b=0)
+        {
+            alaa_start = a;
+            alaa_process_id =b;
+        }
+    }
     public partial class Form1 : Form
     {
         bool first_input = true;
@@ -162,19 +171,6 @@ namespace os_scheduler
             deactivate_unNecessary();
         }
 
-        private void run_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                fill_int();
-                //draw
-                MessageBox.Show("Gantt chart");
-            }
-            catch(Exception exc){
-                MessageBox.Show(exc.Message);
-            }
-        }
-
         private void fill_int()
         {
             if (this.s.method == "RR")
@@ -204,7 +200,7 @@ namespace os_scheduler
             burst_int.Clear();
             for (int i = 0; i < s.count; ++i)
             {
-                if (burst_time[i].Text == ""||arrival_time[i].Text == "")
+                if (burst_time[i].Text == "" || arrival_time[i].Text == "")
                 {
                     Exception e = new Exception("please fill all possible fields");
                     throw (e);
@@ -216,10 +212,9 @@ namespace os_scheduler
         }
 
         private void deactivate_unNecessary()
-
         {
-            
-            if (this.s.method != "RR")  this.rr_quan.Enabled = false;
+
+            if (this.s.method != "RR") this.rr_quan.Enabled = false;
             else rr_quan.Enabled = true;
 
             if (this.s.method != "Priority (non pre-emptive)" && this.s.method != "Priority (pre-emptive)")
@@ -229,7 +224,7 @@ namespace os_scheduler
                     priority[i].Enabled = false;
                 }
             }
-            else if(!priority[0].Enabled)
+            else if (!priority[0].Enabled)
             {
                 for (int i = 0; i < s.count; ++i)
                 {
@@ -237,5 +232,45 @@ namespace os_scheduler
                 }
             }
         }
+
+        private void run_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                fill_int();
+                draw();
+                //MessageBox.Show("Gantt chart");
+            }
+            catch(Exception exc){
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void draw()
+        {
+            List<alaa_data> drawable_data = get_drawable_data();
+            //test
+            string g = "";
+            for (int i = 0; i <= s.count; i++)
+            {
+                g += drawable_data[i].alaa_start.ToString() + "  " + drawable_data[i].alaa_process_id.ToString() + "\n";
+            }
+            MessageBox.Show(g);
+            //draw
+        }
+
+        private List<alaa_data> get_drawable_data()
+        {
+            List<alaa_data> drawable_data = new List<alaa_data>();
+            //call alaa's functions based on this.s.method to fill drawable_data
+            //testing
+            for (int i = 0; i <= s.count; i++)
+            {
+                drawable_data.Add(new alaa_data(i*2,i+1));
+            }
+            //end testing
+            return drawable_data;
+        }
+       
     }
 }
