@@ -12,11 +12,21 @@ namespace os_scheduler
 {
     public partial class Form1 : Form
     {
+        bool first_input = true;
+        
         private scheduler s = new scheduler();
         List<TextBox> burst_time = new List<TextBox>();
+        List<int> burst_int = new List<int>();
+
         List<TextBox> arrival_time = new List<TextBox>();
+        List<int> arrival_int = new List<int>();
+
         List<TextBox> priority = new List<TextBox>();
+        List<int> priority_int = new List<int>();
+
         TextBox rr_quan = new TextBox();
+        int rr_quan_int;
+
         public Form1()
         {
             InitializeComponent();
@@ -37,10 +47,14 @@ namespace os_scheduler
 
         private void count_TextChanged(object sender, EventArgs e)
         {
-            //store this number in your class
-            this.s.count = (count.Text=="")?0:Int32.Parse(count.Text);
-           // MessageBox.Show(this.s.count.ToString());
-            if (s.count != 0 && s.method.Length != 0) take_processes_data();
+            this.s.count = (count.Text == "")? 0:Int32.Parse(count.Text);
+
+            //MessageBox.Show(c.ToString());
+            if (  s.method.Length != 0)
+            {
+                //store this number in your class
+                take_processes_data();
+            }
         }
 
         private void method_SelectedIndexChanged(object sender, EventArgs e)
@@ -48,7 +62,16 @@ namespace os_scheduler
             //store the method in ur class
             this.s.method = method.Text;
             //MessageBox.Show(this.s.method);
-            if (s.count != 0 && s.method.Length != 0) take_processes_data();
+            if ( s.method.Length != 0)
+            {
+                if (first_input == true)
+                {
+                    first_input = false;
+                    take_processes_data();
+                }
+                else deactivate_unNecessary();
+
+            }
         }
         private void take_processes_data()
         {
@@ -60,7 +83,7 @@ namespace os_scheduler
             burst_time.Clear();
             arrival_time.Clear();
             priority.Clear();
-            rr_quan.Enabled = true;
+            if (s.count == 0) return;
 
             int x = 15, y = 20;//relative to groupBox
 
@@ -141,20 +164,76 @@ namespace os_scheduler
 
         private void run_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Gantt chart");
+            try
+            {
+                fill_int();
+                //draw
+                MessageBox.Show("Gantt chart");
+            }
+            catch(Exception exc){
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void fill_int()
+        {
+            if (this.s.method == "RR")
+            {
+                if (rr_quan.Text == "")
+                {
+                    Exception e = new Exception("please fill quantum field");
+                    throw (e);
+                }
+                rr_quan_int = Int32.Parse(rr_quan.Text);
+            }
+            if (this.s.method == "Priority (non pre-emptive)" || this.s.method == "Priority (pre-emptive)")
+            {
+                priority_int.Clear();
+                for (int i = 0; i < s.count; ++i)
+                {
+                    if (priority[i].Text == "")
+                    {
+                        Exception e = new Exception("please fill all possible fields");
+                        throw (e);
+                    }
+                    priority_int.Add(Int32.Parse(priority[i].Text));
+                }
+            }
+
+            arrival_int.Clear();
+            burst_int.Clear();
+            for (int i = 0; i < s.count; ++i)
+            {
+                if (burst_time[i].Text == ""||arrival_time[i].Text == "")
+                {
+                    Exception e = new Exception("please fill all possible fields");
+                    throw (e);
+                }
+
+                arrival_int.Add(Int32.Parse(arrival_time[i].Text));
+                burst_int.Add(Int32.Parse(burst_time[i].Text));
+            }
         }
 
         private void deactivate_unNecessary()
+
         {
-            if (this.s.method != "RR")
-            {
-                this.rr_quan.Enabled = false;
-            }
+            
+            if (this.s.method != "RR")  this.rr_quan.Enabled = false;
+            else rr_quan.Enabled = true;
+
             if (this.s.method != "Priority (non pre-emptive)" && this.s.method != "Priority (pre-emptive)")
             {
                 for (int i = 0; i < s.count; ++i)
                 {
                     priority[i].Enabled = false;
+                }
+            }
+            else if(!priority[0].Enabled)
+            {
+                for (int i = 0; i < s.count; ++i)
+                {
+                    priority[i].Enabled = true;
                 }
             }
         }
