@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace os_scheduler
 {
-    struct alaa_data
+    public struct alaa_data
     {
         public int alaa_start, alaa_process_id;
         public alaa_data(int a=0, int b=0)
@@ -250,13 +250,15 @@ namespace os_scheduler
         {
             List<alaa_data> drawable_data = get_drawable_data();
             //test
-            string g = "";
-            for (int i = 0; i <= s.count; i++)
-            {
-                g += drawable_data[i].alaa_start.ToString() + "  " + drawable_data[i].alaa_process_id.ToString() + "\n";
-            }
-            MessageBox.Show(g);
+            //string g = "";
+            //for (int i = 0; i <= s.count; i++)
+            //{
+            //    g += drawable_data[i].alaa_start.ToString() + "  " + drawable_data[i].alaa_process_id.ToString() + "\n";
+            //}
+            //MessageBox.Show(g);
             //draw
+            Form2 chart = new Form2(drawable_data);
+            chart.ShowDialog();
         }
 
         private List<alaa_data> get_drawable_data()
