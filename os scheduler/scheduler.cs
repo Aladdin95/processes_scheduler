@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace os_scheduler
 {
-    class scheduler
+    public class scheduler
     {
         public int count;
         public string method;

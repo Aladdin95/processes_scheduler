@@ -23,15 +23,15 @@ namespace os_scheduler
     {
         bool first_input = true;
         
-        private scheduler s = new scheduler();
-        List<TextBox> burst_time = new List<TextBox>();
-        List<int> burst_int = new List<int>();
+        public static scheduler s = new scheduler();
+        public List<TextBox> burst_time = new List<TextBox>();
+        public static List<int> burst_int = new List<int>();
 
         List<TextBox> arrival_time = new List<TextBox>();
-        List<int> arrival_int = new List<int>();
+        public static List<int> arrival_int = new List<int>();
 
         List<TextBox> priority = new List<TextBox>();
-        List<int> priority_int = new List<int>();
+        public List<int> priority_int = new List<int>();
 
         TextBox rr_quan = new TextBox();
         int rr_quan_int;
@@ -56,7 +56,7 @@ namespace os_scheduler
 
         private void count_TextChanged(object sender, EventArgs e)
         {
-            this.s.count = (count.Text == "")? 0:Int32.Parse(count.Text);
+            Form1.s.count = (count.Text == "")? 0:Int32.Parse(count.Text);
 
             //MessageBox.Show(c.ToString());
             if (  s.method.Length != 0)
@@ -69,8 +69,8 @@ namespace os_scheduler
         private void method_SelectedIndexChanged(object sender, EventArgs e)
         {
             //store the method in ur class
-            this.s.method = method.Text;
-            //MessageBox.Show(this.s.method);
+            Form1.s.method = method.Text;
+            //MessageBox.Show(Form1.s.method);
             if ( s.method.Length != 0)
             {
                 if (first_input == true)
@@ -115,7 +115,7 @@ namespace os_scheduler
             this.groupBox1.Controls.Add(prio);
 
 
-            for (int i = 0; i < this.s.count; ++i)
+            for (int i = 0; i < Form1.s.count; ++i)
             {
                 // int x = (i!=0) ? burst_time[i - 1].Location.X : 15;
                 //  int y = (i != 0) ? burst_time[i - 1].Location.Y+30 : 20;
@@ -148,7 +148,7 @@ namespace os_scheduler
                 groupBox1.Size = new System.Drawing.Size(groupBox1.Size.Width, groupBox1.Size.Height + 30);
                 this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + 30);
             }
-            y += (this.s.count+1)*30;
+            y += (Form1.s.count+1)*30;
             Label quan = new Label();
             quan.Text = "quantum:";
             quan.Size = new System.Drawing.Size(120, 13);
@@ -173,7 +173,7 @@ namespace os_scheduler
 
         private void fill_int()
         {
-            if (this.s.method == "RR")
+            if (Form1.s.method == "RR")
             {
                 if (rr_quan.Text == "")
                 {
@@ -182,7 +182,7 @@ namespace os_scheduler
                 }
                 rr_quan_int = Int32.Parse(rr_quan.Text);
             }
-            if (this.s.method == "Priority (non pre-emptive)" || this.s.method == "Priority (pre-emptive)")
+            if (Form1.s.method == "Priority (non pre-emptive)" || Form1.s.method == "Priority (pre-emptive)")
             {
                 priority_int.Clear();
                 for (int i = 0; i < s.count; ++i)
@@ -214,10 +214,10 @@ namespace os_scheduler
         private void deactivate_unNecessary()
         {
 
-            if (this.s.method != "RR") this.rr_quan.Enabled = false;
+            if (Form1.s.method != "RR") this.rr_quan.Enabled = false;
             else rr_quan.Enabled = true;
 
-            if (this.s.method != "Priority (non pre-emptive)" && this.s.method != "Priority (pre-emptive)")
+            if (Form1.s.method != "Priority (non pre-emptive)" && Form1.s.method != "Priority (pre-emptive)")
             {
                 for (int i = 0; i < s.count; ++i)
                 {
@@ -264,7 +264,7 @@ namespace os_scheduler
         private List<alaa_data> get_drawable_data()
         {
             List<alaa_data> drawable_data = new List<alaa_data>();
-            //call alaa's functions based on this.s.method to fill drawable_data
+            //call alaa's functions based on Form1.s.method to fill drawable_data
             //testing
             for (int i = 0; i <= s.count; i++)
             {
