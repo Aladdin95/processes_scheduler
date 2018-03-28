@@ -17,7 +17,6 @@ namespace os_scheduler
         List<int> wait_time_int = new List<int>();
         double wt_time = 0 ;
 
-
         public Form2(List<alaa_data> data)
         {
             InitializeComponent();
@@ -29,6 +28,53 @@ namespace os_scheduler
             calculate_wt();
             //MessageBox.Show(wt_time.ToString());
             label2.Text = wt_time.ToString();
+            int time_f_v = drawable[drawable.Count - 1].alaa_start
+                + drawable[drawable.Count - 1].alaa_burst;
+            int chart_length = 660 , x_o = 12, y_o= 89, x, y = y_o,
+                width, height;
+            for (int i = 0; i < drawable.Count; ++i)
+            {
+                //progress bars
+                x = (drawable[i].alaa_start * chart_length / time_f_v) + x_o;
+                width = drawable[i].alaa_burst * chart_length / time_f_v;
+                height = 76;
+                ProgressBar p = new ProgressBar();
+                p.Size = new System.Drawing.Size(width, height);
+                p.Location = new System.Drawing.Point(x, y);
+                this.Controls.Add(p);
+                p.ForeColor = Color.Red;
+                p.BackColor = Color.Red;
+                p.Value = 100;
+
+                //on labels
+                Label o = new Label();
+                o.Text = "P" + drawable[i].alaa_process_id.ToString();
+                o.Size = new System.Drawing.Size(width - 10, 20);
+                o.Location = new System.Drawing.Point(x + 5, y + 28);
+                Graphics gr = p.CreateGraphics();
+                o.TextAlign = ContentAlignment.MiddleCenter;
+                //remove background color
+                o.BackColor = Color.Red;
+                this.Controls.Add(o);
+                o.BringToFront();
+
+                //under labels
+                Label u = new Label();
+                u.Text = drawable[i].alaa_start.ToString();
+                u.Size = new System.Drawing.Size(width - 10, height);
+                u.Location = new System.Drawing.Point(x-5 , y + 10 + height);
+                this.Controls.Add(u);
+
+                if (i == drawable.Count - 1)
+                {
+                    Label z = new Label();
+                    z.Text = time_f_v.ToString();
+                    u.Size = new System.Drawing.Size(width - 10, height);
+                    z.Location = new System.Drawing.Point(x + width-7, y + 10 + height);
+                    this.Controls.Add(z);
+                }
+            }
+           
         }
 
         private void calculate_wt()
@@ -61,6 +107,7 @@ namespace os_scheduler
             }
             wt_time = wt_time / Form1.s.count;
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
