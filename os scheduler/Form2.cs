@@ -40,7 +40,7 @@ namespace os_scheduler
                 wait_time_int.Add(0);
             }
             //fill leave time
-            for (int i = drawable.Count ; i > 0; --i)
+            for (int i = drawable.Count-1 ; i > 0; --i)
             {
                 if (leave_time_int[drawable[i - 1].alaa_process_id-1] == -1)
                 {
