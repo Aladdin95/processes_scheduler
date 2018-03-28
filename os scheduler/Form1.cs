@@ -12,11 +12,12 @@ namespace os_scheduler
 {
     public struct alaa_data
     {
-        public int alaa_start, alaa_process_id;
-        public alaa_data(int a=0, int b=0)
+        public int alaa_start, alaa_burst, alaa_process_id;
+        public alaa_data(int a=0, int b=0 ,int c=0)
         {
             alaa_start = a;
-            alaa_process_id =b;
+            alaa_burst = b;
+            alaa_process_id =c;
         }
     }
     public partial class Form1 : Form
@@ -266,9 +267,9 @@ namespace os_scheduler
             List<alaa_data> drawable_data = new List<alaa_data>();
             //call alaa's functions based on Form1.s.method to fill drawable_data
             //testing
-            for (int i = 0; i <= s.count; i++)
+            for (int i = 0; i < s.count; i++)
             {
-                drawable_data.Add(new alaa_data(i*2,i+1));
+                drawable_data.Add(new alaa_data(i*2,2,i+1));
             }
             //end testing
             return drawable_data;

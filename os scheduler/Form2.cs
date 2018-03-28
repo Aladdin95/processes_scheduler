@@ -28,7 +28,7 @@ namespace os_scheduler
         {
             calculate_wt();
             //MessageBox.Show(wt_time.ToString());
-
+            label2.Text = wt_time.ToString();
         }
 
         private void calculate_wt()
@@ -40,12 +40,14 @@ namespace os_scheduler
                 wait_time_int.Add(0);
             }
             //fill leave time
-            for (int i = drawable.Count-1 ; i > 0; --i)
+            int id;
+            for (int i = drawable.Count-1 ; i >= 0; --i)
             {
-                if (leave_time_int[drawable[i - 1].alaa_process_id-1] == -1)
+                id = drawable[i].alaa_process_id-1;
+                if (leave_time_int[id] == -1)
                 {
-                    leave_time_int[drawable[i - 1].alaa_process_id-1] =
-                        drawable[i].alaa_start;
+                    leave_time_int[id] =
+                        drawable[i].alaa_start + drawable[i].alaa_burst;
                 }
             }
             
@@ -58,6 +60,11 @@ namespace os_scheduler
                 wt_time += wait_time_int[i];
             }
             wt_time = wt_time / Form1.s.count;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         

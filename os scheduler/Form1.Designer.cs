@@ -74,7 +74,7 @@
             this.count.Location = new System.Drawing.Point(29, 49);
             this.count.Name = "count";
             this.count.Size = new System.Drawing.Size(133, 20);
-            this.count.TabIndex = 5;
+            this.count.TabIndex = 0;
             this.count.TextChanged += new System.EventHandler(this.count_TextChanged);
             // 
             // groupBox1
