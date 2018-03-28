@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.PowerPacks;
 
 namespace os_scheduler
 {
@@ -30,31 +31,43 @@ namespace os_scheduler
             label2.Text = wt_time.ToString();
             int time_f_v = drawable[drawable.Count - 1].alaa_start
                 + drawable[drawable.Count - 1].alaa_burst;
+
             int chart_length = 660 , x_o = 12, y_o= 89, x, y = y_o,
                 width, height;
+
+            ShapeContainer shapeContainer1 = new ShapeContainer();
+            shapeContainer1.Location = new System.Drawing.Point(0, 0);
+            shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
+            shapeContainer1.Name = "shapeContainer1";
+            //shapeContainer1.Shapes.AddRange(new Shape[] { });
+            shapeContainer1.Size = new System.Drawing.Size(684, 271);
+            shapeContainer1.TabIndex = 4;
+            shapeContainer1.TabStop = false;
+            this.Controls.Add(shapeContainer1);
+
             for (int i = 0; i < drawable.Count; ++i)
             {
-                //progress bars
                 x = (drawable[i].alaa_start * chart_length / time_f_v) + x_o;
                 width = drawable[i].alaa_burst * chart_length / time_f_v;
                 height = 76;
-                ProgressBar p = new ProgressBar();
-                p.Size = new System.Drawing.Size(width, height);
-                p.Location = new System.Drawing.Point(x, y);
-                this.Controls.Add(p);
-                p.ForeColor = Color.Red;
-                p.BackColor = Color.Red;
-                p.Value = 100;
+
+                //recs
+                
+                RectangleShape rectangleShape1 = new RectangleShape();
+                rectangleShape1.Location = new System.Drawing.Point(x, y);
+                rectangleShape1.Name = "rectangleShape"+(i+1).ToString();
+                rectangleShape1.Size = new System.Drawing.Size(width, height);
+                shapeContainer1.Shapes.Add(rectangleShape1);
+                
 
                 //on labels
                 Label o = new Label();
                 o.Text = "P" + drawable[i].alaa_process_id.ToString();
                 o.Size = new System.Drawing.Size(width - 10, 20);
                 o.Location = new System.Drawing.Point(x + 5, y + 28);
-                Graphics gr = p.CreateGraphics();
                 o.TextAlign = ContentAlignment.MiddleCenter;
                 //remove background color
-                o.BackColor = Color.Red;
+                o.BackColor = Color.Transparent;
                 this.Controls.Add(o);
                 o.BringToFront();
 
