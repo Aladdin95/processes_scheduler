@@ -258,20 +258,56 @@ namespace os_scheduler
             //}
             //MessageBox.Show(g);
             //draw
+            MessageBox.Show("draw size: "+drawable_data.Count.ToString()
+                +"\n output size: "+s.output.Count.ToString()
+                +"\n input size: "+ s.input.Count.ToString()
+                );
             Form2 chart = new Form2(drawable_data);
             chart.ShowDialog();
         }
 
-        private List<alaa_data> get_drawable_data()
+        private List<alaa_data> get_drawable_data()//interface
         {
-            List<alaa_data> drawable_data = new List<alaa_data>();
+            s.input = new List<Process>(s.nprocess);
+            s.output = new List<Process>(s.nprocess);
+            
             //call alaa's functions based on Form1.s.method to fill drawable_data
-            //testing
-            for (int i = 0; i < s.nprocess; i++)
+            //preparing input
+            for (int i = 0; i < s.nprocess; ++i)
             {
-                drawable_data.Add(new alaa_data(i*2,2,i+1));
+                s.input.Add(new Process(i+1, arrival_int[i], burst_int[i]));
+                if (s.method == "Priority (non pre-emptive)"
+                    ||
+                    s.method == "Priority (pre-emptive)")
+                {
+                    s.input[i].priority = priority_int[i];
+                }
             }
+            //calling functions
+            if (s.method == "FCFS") s.fcfs();
+            else if (s.method == "Priority (non pre-emptive)") s.priority_non_preemptive();
+            else if (s.method == "Priority (pre-emptive)") s.priority_preemptive();
+            else if (s.method == "SJF (non pre-emptive)") s.sjf_non_preemptive();
+            else if (s.method == "SJF (pre-emptive)") s.sjf_preemptive();
+            else MessageBox.Show("A7a");
+
+            List<alaa_data> drawable_data = new List<alaa_data>(s.output.Count);
+            //testing
+                //for (int i = 0; i < s.nprocess; i++)
+                //{
+                //    drawable_data.Add(new alaa_data(i * 2, 2, i + 1));
+                //}
             //end testing
+
+            //real values
+                for (int i = 0; i < s.output.Count; i++)
+                {
+                    drawable_data.Add(new alaa_data(s.output[i].start,
+                        s.output[i].end - s.output[i].start,
+                        s.output[i].id
+                        ));
+                }
+            //end real vals
             return drawable_data;
         }
        

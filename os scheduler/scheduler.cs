@@ -37,20 +37,23 @@ namespace os_scheduler
         {
             fcfs_sort(ref input);
             input.Reverse();
-
-            List<Process> output = new List<Process>(nprocess);
-
-            output.Add(new Process(input[0].id, input[0].arrival, input[0].burst));
+            output.Add(new Process(input[0].id, input[0].arrival, input[0].burst, 
+                0, input[0].arrival, input[0].arrival + input[0].burst));
 
             for (int i = 1; i < nprocess; ++i)
             {
                 if (input[i].arrival < input[i - 1].arrival + input[i - 1].burst)
                 {
-                    output.Add(new Process(input[i].id, input[i - 1].arrival + input[i - 1].burst, input[i].burst));
+                    output.Add(new Process(input[i].id, input[i].arrival , input[i].burst,
+                        0 , input[i - 1].arrival + input[i - 1].burst ,
+                        input[i - 1].arrival + input[i - 1].burst + input[i].burst
+                        ));
                 }
                 else
                 {
-                    output.Add(new Process(input[i].id, input[i].arrival, input[i].burst));
+                    output.Add(new Process(input[i].id, input[i].arrival, input[i].burst,
+                        0, input[i].arrival, input[i].arrival+input[i].burst
+                        ));
                 }
             }
         }
