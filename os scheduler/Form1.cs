@@ -57,7 +57,7 @@ namespace os_scheduler
 
         private void count_TextChanged(object sender, EventArgs e)
         {
-            Form1.s.count = (count.Text == "")? 0:Int32.Parse(count.Text);
+            Form1.s.nprocess = (count.Text == "")? 0:Int32.Parse(count.Text);
 
             //MessageBox.Show(c.ToString());
             if (  s.method.Length != 0)
@@ -93,7 +93,7 @@ namespace os_scheduler
             burst_time.Clear();
             arrival_time.Clear();
             priority.Clear();
-            if (s.count == 0) return;
+            if (s.nprocess == 0) return;
 
             int x = 15, y = 20;//relative to groupBox
 
@@ -116,7 +116,7 @@ namespace os_scheduler
             this.groupBox1.Controls.Add(prio);
 
 
-            for (int i = 0; i < Form1.s.count; ++i)
+            for (int i = 0; i < Form1.s.nprocess; ++i)
             {
                 // int x = (i!=0) ? burst_time[i - 1].Location.X : 15;
                 //  int y = (i != 0) ? burst_time[i - 1].Location.Y+30 : 20;
@@ -149,7 +149,7 @@ namespace os_scheduler
                 groupBox1.Size = new System.Drawing.Size(groupBox1.Size.Width, groupBox1.Size.Height + 30);
                 this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + 30);
             }
-            y += (Form1.s.count+1)*30;
+            y += (Form1.s.nprocess+1)*30;
             Label quan = new Label();
             quan.Text = "quantum:";
             quan.Size = new System.Drawing.Size(120, 13);
@@ -186,7 +186,7 @@ namespace os_scheduler
             if (Form1.s.method == "Priority (non pre-emptive)" || Form1.s.method == "Priority (pre-emptive)")
             {
                 priority_int.Clear();
-                for (int i = 0; i < s.count; ++i)
+                for (int i = 0; i < s.nprocess; ++i)
                 {
                     if (priority[i].Text == "")
                     {
@@ -199,7 +199,7 @@ namespace os_scheduler
 
             arrival_int.Clear();
             burst_int.Clear();
-            for (int i = 0; i < s.count; ++i)
+            for (int i = 0; i < s.nprocess; ++i)
             {
                 if (burst_time[i].Text == "" || arrival_time[i].Text == "")
                 {
@@ -220,14 +220,14 @@ namespace os_scheduler
 
             if (Form1.s.method != "Priority (non pre-emptive)" && Form1.s.method != "Priority (pre-emptive)")
             {
-                for (int i = 0; i < s.count; ++i)
+                for (int i = 0; i < s.nprocess; ++i)
                 {
                     priority[i].Enabled = false;
                 }
             }
             else if (!priority[0].Enabled)
             {
-                for (int i = 0; i < s.count; ++i)
+                for (int i = 0; i < s.nprocess; ++i)
                 {
                     priority[i].Enabled = true;
                 }
@@ -252,7 +252,7 @@ namespace os_scheduler
             List<alaa_data> drawable_data = get_drawable_data();
             //test
             //string g = "";
-            //for (int i = 0; i <= s.count; i++)
+            //for (int i = 0; i <= s.nprocess; i++)
             //{
             //    g += drawable_data[i].alaa_start.ToString() + "  " + drawable_data[i].alaa_process_id.ToString() + "\n";
             //}
@@ -267,7 +267,7 @@ namespace os_scheduler
             List<alaa_data> drawable_data = new List<alaa_data>();
             //call alaa's functions based on Form1.s.method to fill drawable_data
             //testing
-            for (int i = 0; i < s.count; i++)
+            for (int i = 0; i < s.nprocess; i++)
             {
                 drawable_data.Add(new alaa_data(i*2,2,i+1));
             }

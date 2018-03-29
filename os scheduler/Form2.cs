@@ -32,7 +32,7 @@ namespace os_scheduler
             int time_f_v = drawable[drawable.Count - 1].alaa_start
                 + drawable[drawable.Count - 1].alaa_burst;
 
-            int chart_length = 660 , x_o = 12, y_o= 89, x, y = y_o,
+            int chart_length = 660 , x_o = 12, y_o= 79, x, y = y_o,
                 width, height;
 
             ShapeContainer shapeContainer1 = new ShapeContainer();
@@ -93,7 +93,7 @@ namespace os_scheduler
         private void calculate_wt()
         {
 
-            for (int i = 0; i < Form1.s.count; ++i)
+            for (int i = 0; i < Form1.s.nprocess; ++i)
             {
                 leave_time_int.Add(-1);
                 wait_time_int.Add(0);
@@ -111,14 +111,14 @@ namespace os_scheduler
             }
             
             //waiting time
-            for (int i = 0; i < Form1.s.count; ++i)
+            for (int i = 0; i < Form1.s.nprocess; ++i)
             {
                 wait_time_int[i] = leave_time_int[i]
                     - Form1.burst_int[i]
                     - Form1.arrival_int[i];
                 wt_time += wait_time_int[i];
             }
-            wt_time = wt_time / Form1.s.count;
+            wt_time = wt_time / Form1.s.nprocess;
         }
 
 
