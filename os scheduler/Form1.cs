@@ -214,7 +214,7 @@ namespace os_scheduler
 
         private void deactivate_unNecessary()
         {
-
+            if (s.nprocess == 0) return;
             if (Form1.s.method != "RR") this.rr_quan.Enabled = false;
             else rr_quan.Enabled = true;
 
