@@ -42,11 +42,11 @@ namespace os_scheduler
 
             for (int i = 1; i < nprocess; ++i)
             {
-                if (input[i].arrival < input[i - 1].arrival + input[i - 1].burst)
+                if (input[i].arrival < output[i-1].end)
                 {
                     output.Add(new Process(input[i].id, input[i].arrival , input[i].burst,
-                        0 , input[i - 1].arrival + input[i - 1].burst ,
-                        input[i - 1].arrival + input[i - 1].burst + input[i].burst
+                        0 , output[i - 1].start + output[i - 1].burst ,
+                        output[i - 1].start + output[i - 1].burst + input[i].burst
                         ));
                 }
                 else

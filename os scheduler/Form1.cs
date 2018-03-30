@@ -258,10 +258,19 @@ namespace os_scheduler
             //}
             //MessageBox.Show(g);
             //draw
-            MessageBox.Show("draw size: "+drawable_data.Count.ToString()
-                +"\n output size: "+s.output.Count.ToString()
-                +"\n input size: "+ s.input.Count.ToString()
-                );
+            //MessageBox.Show("draw size: "+drawable_data.Count.ToString()
+            //    +"\n output size: "+s.output.Count.ToString()
+            //    +"\n input size: "+ s.input.Count.ToString()
+            //    );
+            string s = "";
+            for (int i = 0; i < drawable_data.Count; ++i)
+            {
+                s += "id: " + drawable_data[i].alaa_process_id.ToString();
+                s += " - burst: " + drawable_data[i].alaa_burst.ToString();
+                s += " - start: " + drawable_data[i].alaa_start.ToString();
+                s += "\n";
+            }
+            MessageBox.Show(s);
             Form2 chart = new Form2(drawable_data);
             chart.ShowDialog();
         }
