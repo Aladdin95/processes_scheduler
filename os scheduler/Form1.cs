@@ -298,7 +298,7 @@ namespace os_scheduler
             else if (s.method == "Priority (pre-emptive)") s.priority_preemptive();
             else if (s.method == "SJF (non pre-emptive)") s.sjf_non_preemptive();
             else if (s.method == "SJF (pre-emptive)") s.sjf_preemptive();
-            else MessageBox.Show("A7a");
+            else s.RR(rr_quan_int);
 
             List<alaa_data> drawable_data = new List<alaa_data>(s.output.Count);
             //testing

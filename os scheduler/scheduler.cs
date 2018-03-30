@@ -375,5 +375,106 @@ namespace os_scheduler
             }
         }
 
+        static int min(int x, int y) { return (x > y) ? y : x; }
+
+        public void RR(int quantum)
+        {
+            List<Process> temp = new List<Process>(input);
+            List<Process> subtemp = new List<Process>(nprocess);
+            for (int i = 0; i <= nprocess; ++i)
+            {
+                subtemp.Add(new Process(0, 0, 0));
+            }
+
+            int front = 0, rear = 0;
+
+            fcfs_sort(ref temp);
+
+            start = temp.Last().arrival;
+            end = 0;
+            while (temp.Count > 0 && temp.Last().burst < quantum)
+            {
+                end = temp.Last().arrival + temp.Last().burst;
+                output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
+                temp.RemoveAt(temp.Count - 1);
+                start = end;
+            }
+
+            if (temp.Count > 0)
+            {
+                end += quantum;
+                output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
+                if (temp.Last().burst > quantum)
+                {
+                    output.Last().burst = quantum;
+                    temp.Last().burst -= quantum;
+                    temp.Last().arrival = end;
+                    fcfs_sort(ref temp);
+                }
+                else
+                    temp.RemoveAt(temp.Count - 1);
+            }
+
+            while (temp.Count > 0)
+            {
+                if (temp.Last().arrival > output.Last().end)
+                {
+                    if (front != rear)
+                    {
+                        start = end;
+                        end += min(subtemp[front].burst, quantum);
+                        output.Add(new Process(subtemp[front].id, subtemp[front].arrival, subtemp[front].burst, subtemp[front].priority, start, end));
+                        if (subtemp[front].burst > quantum)
+                        {
+                            output.Last().burst = quantum;
+                            subtemp[front].burst -= quantum;
+                            subtemp[front].arrival = end;
+                            temp.Add(subtemp[front]);
+                            fcfs_sort(ref temp);
+                        }
+                        front = (front + 1) % (nprocess + 1);
+                    }
+                    else
+                    {
+                        start = temp.Last().arrival;
+                        end = temp.Last().arrival + min(temp.Last().burst, quantum);
+                        output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
+                        if (temp[front].burst > quantum)
+                        {
+                            output.Last().burst = quantum;
+                            temp.Last().burst -= quantum;
+                            temp.Last().arrival = end;
+                            fcfs_sort(ref temp);
+                        }
+                        else
+                            temp.RemoveAt(temp.Count - 1);
+                    }
+                }
+                else
+                {
+                    subtemp[rear] = (temp.Last());
+                    rear = (rear + 1) % (nprocess + 1);
+                    temp.RemoveAt(temp.Count - 1);
+                }
+            }
+
+            while (rear != front)
+            {
+                start = end;
+                end += min(subtemp[front].burst, quantum);
+                output.Add(new Process(subtemp[front].id, subtemp[front].arrival, subtemp[front].burst, subtemp[front].priority, start, end));
+                if (subtemp[front].burst > quantum)
+                {
+                    output.Last().burst = quantum;
+                    subtemp[front].burst -= quantum;
+                    subtemp[rear] = (subtemp[front]);
+                    rear = (rear + 1) % (nprocess + 1);
+                }
+                front = (front + 1) % (nprocess + 1);
+            }
+        }
     }
+
 }
+
+
