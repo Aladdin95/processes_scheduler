@@ -65,14 +65,15 @@ namespace os_scheduler
 
             sjf_sort(ref temp);
 
-            start = temp[0].arrival;
-            end = temp[0].arrival + temp[0].burst;
+            start = temp.Last().arrival;
+            end = temp.Last().arrival + temp.Last().burst;
 
-            output.Add(new Process(temp[0].id, temp[0].arrival, temp[0].burst, temp[0].priority, start, end));
+            output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
+            temp.RemoveAt(temp.Count - 1);
 
-            for (int j = 1; j < nprocess; j++)
+            while (temp.Count > 0)
             {
-                if (temp[j].arrival > end)
+                if (temp.Last().arrival > end)
                 {
                     if (subtemp.Count() > 0)
                     {
@@ -86,18 +87,19 @@ namespace os_scheduler
                         end += subtemp.Last().burst;
                         output.Add(new Process(subtemp.Last().id, subtemp.Last().arrival, subtemp.Last().burst, subtemp.Last().priority, start, end));
                         subtemp.RemoveAt(subtemp.Count - 1);
-                        j--;
                     }
                     else
                     {
-                        start = temp[j].arrival;
-                        end = temp[j].arrival + temp[j].burst;
-                        output.Add(new Process(temp[j].id, temp[j].arrival, temp[j].burst, temp[j].priority, start, end));
+                        start = temp.Last().arrival;
+                        end = temp.Last().arrival + temp.Last().burst;
+                        output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
+                        temp.RemoveAt(temp.Count - 1);
                     }
                 }
                 else
                 {
-                    subtemp.Add(temp[j]);
+                    subtemp.Add(temp.Last());
+                    temp.RemoveAt(temp.Count - 1);
                 }
             }
 
@@ -317,16 +319,17 @@ namespace os_scheduler
             List<Process> subtemp = new List<Process>(nprocess);
 
             priority_sort(ref temp);
-            temp.Reverse();
 
-            start = temp[0].arrival;
-            end = temp[0].arrival + temp[0].burst;
+            start = temp.Last().arrival;
+            end = temp.Last().arrival + temp.Last().burst;
 
-            output.Add(new Process(temp[0].id, temp[0].arrival, temp[0].burst, temp[0].priority, start, end));
+            output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
 
-            for (int j = 1; j < nprocess; j++)
+            temp.RemoveAt(temp.Count - 1);
+
+            while (temp.Count > 0)
             {
-                if (temp[j].arrival > end)
+                if (temp.Last().arrival > end)
                 {
                     if (subtemp.Count() > 0)
                     {
@@ -340,18 +343,19 @@ namespace os_scheduler
                         end += subtemp.Last().burst;
                         output.Add(new Process(subtemp.Last().id, subtemp.Last().arrival, subtemp.Last().burst, subtemp.Last().priority, start, end));
                         subtemp.RemoveAt(subtemp.Count - 1);
-                        j--;
                     }
                     else
                     {
-                        start = temp[j].arrival;
-                        end = temp[j].arrival + temp[j].burst;
-                        output.Add(new Process(temp[j].id, temp[j].arrival, temp[j].burst, temp[j].priority, start, end));
+                        start = temp.Last().arrival;
+                        end = temp.Last().arrival + temp.Last().burst;
+                        output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
+                        temp.RemoveAt(temp.Count - 1);
                     }
                 }
                 else
                 {
-                    subtemp.Add(temp[j]);
+                    subtemp.Add(temp.Last());
+                    temp.RemoveAt(temp.Count - 1);
                 }
             }
 
