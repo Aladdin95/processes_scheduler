@@ -32,7 +32,7 @@ namespace os_scheduler
             int time_f_v = drawable[drawable.Count - 1].alaa_start
                 + drawable[drawable.Count - 1].alaa_burst;
 
-            int chart_length = 660 , x_o = 12, y_o= 79, x, y = y_o,
+            int chart_length = 760 , x_o = 12, y_o= 79, x, y = y_o,
                 width, height;
 
             ShapeContainer shapeContainer1 = new ShapeContainer();
@@ -63,8 +63,8 @@ namespace os_scheduler
                 //on labels
                 Label o = new Label();
                 o.Text = "P" + drawable[i].alaa_process_id.ToString();
-                o.Size = new System.Drawing.Size(width - 10, 20);
-                o.Location = new System.Drawing.Point(x + 5, y + 28);
+                o.Size = new System.Drawing.Size(width-2, 20);
+                o.Location = new System.Drawing.Point(x+1, y + 28);
                 o.TextAlign = ContentAlignment.MiddleCenter;
                 //remove background color
                 o.BackColor = Color.Transparent;
@@ -74,16 +74,17 @@ namespace os_scheduler
                 //under labels
                 Label u = new Label();
                 u.Text = drawable[i].alaa_start.ToString();
-                u.Size = new System.Drawing.Size(width - 10, height);
-                u.Location = new System.Drawing.Point(x-5 , y + 10 + height);
+                u.Size = new System.Drawing.Size(width, height);
+                u.Location = new System.Drawing.Point(x-6 , y + 10 + height);
+                u.TextAlign = ContentAlignment.TopLeft;
                 this.Controls.Add(u);
 
                 if (i == drawable.Count - 1)
                 {
                     Label z = new Label();
                     z.Text = time_f_v.ToString();
-                    u.Size = new System.Drawing.Size(width - 10, height);
-                    z.Location = new System.Drawing.Point(x + width-7, y + 10 + height);
+                    u.Size = new System.Drawing.Size(width, height);
+                    z.Location = new System.Drawing.Point(x + width-5, y + 10 + height);
                     this.Controls.Add(z);
                 }
             }
