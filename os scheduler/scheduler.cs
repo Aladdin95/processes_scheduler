@@ -27,8 +27,8 @@ namespace os_scheduler
         {
             t.Sort(delegate(Process x, Process y)
             {
-                if (x.arrival == y.arrival) return 0;
-                else if (x.arrival < y.arrival) return 1;
+                if (x.arrival == y.arrival) return 1;//swap
+                else if (x.arrival < y.arrival) return 1;//swap
                 else return -1;
             });
         }
@@ -36,17 +36,17 @@ namespace os_scheduler
         public void fcfs()
         {
             fcfs_sort(ref input);
-            input.Reverse();
-            output.Add(new Process(input[0].id, input[0].arrival, input[0].burst, 
-                0, input[0].arrival, input[0].arrival + input[0].burst));
+            //input.Reverse();
+            output.Add(new Process(input[input.Count - 1].id, input[input.Count - 1].arrival, input[input.Count - 1].burst,
+                0, input[input.Count - 1].arrival, input[input.Count - 1].arrival + input[input.Count - 1].burst));
 
-            for (int i = 1; i < nprocess; ++i)
+            for (int i = input.Count - 2; i > -1; --i)
             {
-                if (input[i].arrival < output[i-1].end)
+                if (input[i].arrival < output.Last().end)
                 {
                     output.Add(new Process(input[i].id, input[i].arrival , input[i].burst,
-                        0 , output[i - 1].start + output[i - 1].burst ,
-                        output[i - 1].start + output[i - 1].burst + input[i].burst
+                        0, output.Last().start + output.Last().burst,
+                         output.Last().start + output.Last().burst + input[i].burst
                         ));
                 }
                 else
