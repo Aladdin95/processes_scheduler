@@ -16,6 +16,7 @@ namespace os_scheduler
         List<alaa_data> drawable ;
         List<int> leave_time_int = new List<int>();
         List<int> wait_time_int = new List<int>();
+        List<Color> colors;
         double wt_time = 0 ;
 
         public Form2(List<alaa_data> data)
@@ -27,6 +28,7 @@ namespace os_scheduler
         private void Form2_Load(object sender, EventArgs e)
         {
             calculate_wt();
+            generate_colors();
             //MessageBox.Show(wt_time.ToString());
             label2.Text = wt_time.ToString();
             int time_f_v = drawable[drawable.Count - 1].alaa_start
@@ -53,21 +55,23 @@ namespace os_scheduler
 
                 //recs
                 
-                RectangleShape rectangleShape1 = new RectangleShape();
-                rectangleShape1.Location = new System.Drawing.Point(x, y);
-                rectangleShape1.Name = "rectangleShape"+(i+1).ToString();
-                rectangleShape1.Size = new System.Drawing.Size(width, height);
-                shapeContainer1.Shapes.Add(rectangleShape1);
-                
+                //RectangleShape rectangleShape1 = new RectangleShape();
+                //rectangleShape1.Location = new System.Drawing.Point(x, y);
+                //rectangleShape1.Name = "rectangleShape"+(i+1).ToString();
+                //rectangleShape1.Size = new System.Drawing.Size(width, height);
+                ////colors[drawable[i].alaa_process_id - 1];
+                // rectangleShape1.BorderColor = Color.Blue;
+                // //rectangleShape1.BorderWidth = 5;
+                //shapeContainer1.Shapes.Add(rectangleShape1);
 
                 //on labels
                 Label o = new Label();
                 o.Text = "P" + drawable[i].alaa_process_id.ToString();
-                o.Size = new System.Drawing.Size(width-2, 20);
+                o.Size = new System.Drawing.Size(width-2, 50);
                 o.Location = new System.Drawing.Point(x+1, y + 28);
                 o.TextAlign = ContentAlignment.MiddleCenter;
-                //remove background color
-                o.BackColor = Color.Transparent;
+                //add background color
+                o.BackColor = colors[drawable[i].alaa_process_id - 1];
                 this.Controls.Add(o);
                 o.BringToFront();
 
@@ -128,8 +132,13 @@ namespace os_scheduler
             this.Close();
         }
 
-       
-
-        //private void 
+        private void generate_colors()
+        {
+            colors = new List<Color>(Form1.s.nprocess);
+            for (int i = 0; i < Form1.s.nprocess; ++i)
+            {
+                colors.Add(Color.Blue);
+            }
+        }
     }
 }
