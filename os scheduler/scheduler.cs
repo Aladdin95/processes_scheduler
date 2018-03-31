@@ -450,10 +450,9 @@ namespace os_scheduler
             output_with_idle = new List<Process>(n);
 
             if (output[0].arrival > 0)
-            {
                 output_with_idle.Add(new Process(input.Count + 1, 0, output[0].arrival, 0, 0, output[0].arrival));
-                output_with_idle.Add(output[0]);
-            }
+                
+            output_with_idle.Add(output[0]);
 
             for (int i = 1; i < output.Count; ++i)
             {

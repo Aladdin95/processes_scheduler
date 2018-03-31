@@ -88,8 +88,8 @@ namespace os_scheduler
             //MessageBox.Show("ready to retrieve input");
             //reset
             groupBox1.Controls.Clear();
-            groupBox1.Size = new System.Drawing.Size(588, 160);
-            this.Size = new System.Drawing.Size(628, 318);
+            groupBox1.Size = new System.Drawing.Size(588, 130);
+            this.Size = new System.Drawing.Size(628, 290);
             burst_time.Clear();
             arrival_time.Clear();
             priority.Clear();
@@ -99,19 +99,19 @@ namespace os_scheduler
 
             Label write_arrival = new Label();
             write_arrival.Text = "arrival time";
-            write_arrival.Size = new System.Drawing.Size(120, 13);
+            write_arrival.Size = new System.Drawing.Size(120, 20);
             write_arrival.Location = new System.Drawing.Point(x+360+20, y);
             this.groupBox1.Controls.Add(write_arrival);
 
             Label write_bur_time = new Label();
             write_bur_time.Text = "burst time";
-            write_bur_time.Size = new System.Drawing.Size(120, 13);
+            write_bur_time.Size = new System.Drawing.Size(120, 20);
             write_bur_time.Location = new System.Drawing.Point(x + 120, y);
             this.groupBox1.Controls.Add(write_bur_time);
 
             Label prio = new Label();
             prio.Text = "priority";
-            prio.Size = new System.Drawing.Size(120, 13);
+            prio.Size = new System.Drawing.Size(120, 20);
             prio.Location = new System.Drawing.Point(x + 240 + 10, y);
             this.groupBox1.Controls.Add(prio);
 
@@ -123,33 +123,33 @@ namespace os_scheduler
 
                 Label name = new Label();
                 name.Text = "task" + (i+1).ToString();
-                name.Size = new System.Drawing.Size(120, 13);
-                name.Location = new System.Drawing.Point(x, y + ((i + 1) * 30));
+                name.Size = new System.Drawing.Size(120, 20);
+                name.Location = new System.Drawing.Point(x, y + ((i + 1) * 35));
                 this.groupBox1.Controls.Add(name);
 
                 TextBox bur = new TextBox();
                 burst_time.Add(bur);
-                burst_time[i].Location = new System.Drawing.Point(x + 120, y + (i+1) * 30);
-                burst_time[i].Size = new System.Drawing.Size(120, 13);
+                burst_time[i].Location = new System.Drawing.Point(x + 120, y + (i+1) * 35);
+                burst_time[i].Size = new System.Drawing.Size(120, 20);
                 this.groupBox1.Controls.Add(burst_time[i]);
 
                 TextBox pr = new TextBox();
                 priority.Add(pr);
-                priority[i].Location = new System.Drawing.Point(x + 240 + 10, y + (i + 1) * 30);
-                priority[i].Size = new System.Drawing.Size(120, 13);
+                priority[i].Location = new System.Drawing.Point(x + 240 + 10, y + (i + 1) * 35);
+                priority[i].Size = new System.Drawing.Size(120, 20);
                 this.groupBox1.Controls.Add(priority[i]);
 
                 TextBox arr = new TextBox();
                 arrival_time.Add(arr);
-                arrival_time[i].Location = new System.Drawing.Point(x + 360+20, y + (i + 1) * 30);
-                arrival_time[i].Size = new System.Drawing.Size(120, 13);
+                arrival_time[i].Location = new System.Drawing.Point(x + 360+20, y + (i + 1) * 35);
+                arrival_time[i].Size = new System.Drawing.Size(120, 20);
                 this.groupBox1.Controls.Add(arrival_time[i]);
 
 
-                groupBox1.Size = new System.Drawing.Size(groupBox1.Size.Width, groupBox1.Size.Height + 30);
-                this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + 30);
+                groupBox1.Size = new System.Drawing.Size(groupBox1.Size.Width, groupBox1.Size.Height + 35);
+                this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + 35);
             }
-            y += (Form1.s.nprocess+1)*30;
+            y += (Form1.s.nprocess+1)*35;
           
            // y += 25;
             // y+=25;
@@ -164,7 +164,9 @@ namespace os_scheduler
             run.Name = "run";
             run.Click += new System.EventHandler(this.run_Click);
             this.groupBox1.Controls.Add(run);
-
+            run.Font = new Font("Lucida Calligraphy", 17, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+            run.ForeColor = Color.White;
+            run.BackColor = Color.DeepSkyBlue;
             deactivate_unNecessary();
         }
 
