@@ -37,15 +37,15 @@ namespace os_scheduler
             int chart_length = 760 , x_o = 12, y_o= 79, x, y = y_o,
                 width, height;
 
-            ShapeContainer shapeContainer1 = new ShapeContainer();
-            shapeContainer1.Location = new System.Drawing.Point(0, 0);
-            shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
-            shapeContainer1.Name = "shapeContainer1";
-            //shapeContainer1.Shapes.AddRange(new Shape[] { });
-            shapeContainer1.Size = new System.Drawing.Size(684, 271);
-            shapeContainer1.TabIndex = 4;
-            shapeContainer1.TabStop = false;
-            this.Controls.Add(shapeContainer1);
+            //ShapeContainer shapeContainer1 = new ShapeContainer();
+            //shapeContainer1.Location = new System.Drawing.Point(0, 0);
+            //shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
+            //shapeContainer1.Name = "shapeContainer1";
+            ////shapeContainer1.Shapes.AddRange(new Shape[] { });
+            //shapeContainer1.Size = new System.Drawing.Size(684, 271);
+            //shapeContainer1.TabIndex = 4;
+            //shapeContainer1.TabStop = false;
+            //this.Controls.Add(shapeContainer1);
 
             for (int i = 0; i < drawable.Count; ++i)
             {
@@ -66,14 +66,15 @@ namespace os_scheduler
 
                 //on labels
                 Label o = new Label();
-                o.Text = "P" + drawable[i].alaa_process_id.ToString();
-                o.Size = new System.Drawing.Size(width-2, 50);
+                o.Text = (drawable[i].alaa_process_id > Form1.s.nprocess)? "idle":"P" + drawable[i].alaa_process_id.ToString();
+                o.Size = new System.Drawing.Size(width-2, 55);
                 o.Location = new System.Drawing.Point(x+1, y + 28);
                 o.TextAlign = ContentAlignment.MiddleCenter;
                 //add background color
                 o.BackColor = colors[drawable[i].alaa_process_id - 1];
                 this.Controls.Add(o);
                 o.BringToFront();
+                o.Font = new Font("Comic Sans MS", 12, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
 
                 //under labels
                 Label u = new Label();
@@ -81,6 +82,7 @@ namespace os_scheduler
                 u.Size = new System.Drawing.Size(width, height);
                 u.Location = new System.Drawing.Point(x-6 , y + 10 + height);
                 u.TextAlign = ContentAlignment.TopLeft;
+                u.Font = new Font("Comic Sans MS", 10, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
                 this.Controls.Add(u);
 
                 if (i == drawable.Count - 1)
@@ -89,6 +91,7 @@ namespace os_scheduler
                     z.Text = time_f_v.ToString();
                     u.Size = new System.Drawing.Size(width, height);
                     z.Location = new System.Drawing.Point(x + width-5, y + 10 + height);
+                    z.Font = new Font("Comic Sans MS", 10, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
                     this.Controls.Add(z);
                 }
             }
@@ -134,10 +137,15 @@ namespace os_scheduler
 
         private void generate_colors()
         {
+            int r, g, b;
+            Random m = new Random();
             colors = new List<Color>(Form1.s.nprocess);
-            for (int i = 0; i < Form1.s.nprocess; ++i)
+            for (int i = 0; i < Form1.s.nprocess+1; ++i)//more place for idle
             {
-                colors.Add(Color.Blue);
+                r = m.Next(30,255);
+                g = m.Next(30,255);
+                b = m.Next(30,255);
+                colors.Add(Color.FromArgb(r,g,b));
             }
         }
     }
