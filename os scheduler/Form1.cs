@@ -276,7 +276,7 @@ namespace os_scheduler
                 s += " - start: " + drawable_data[i].alaa_start.ToString();
                 s += "\n";
             }
-            MessageBox.Show(s);
+            //MessageBox.Show(s);
             //if time line is zero don't draw
             if (drawable_data.Last().alaa_start == 0 && drawable_data.Last().alaa_burst == 0)
             {
