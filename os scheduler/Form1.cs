@@ -34,7 +34,6 @@ namespace os_scheduler
         List<TextBox> priority = new List<TextBox>();
         public List<int> priority_int = new List<int>();
 
-        TextBox rr_quan = new TextBox();
         int rr_quan_int;
 
         public Form1()
@@ -52,7 +51,8 @@ namespace os_scheduler
             this.Text = "Processes Scheduler";
            // this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.StartPosition = FormStartPosition.CenterScreen;
-            
+            quan.Visible = false;
+            rr_quan.Visible = false;
         }
 
         private void count_TextChanged(object sender, EventArgs e)
@@ -150,15 +150,11 @@ namespace os_scheduler
                 this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + 30);
             }
             y += (Form1.s.nprocess+1)*30;
-            Label quan = new Label();
-            quan.Text = "quantum:";
-            quan.Size = new System.Drawing.Size(120, 13);
-            quan.Location = new System.Drawing.Point(x + 10 + 240, y+10);
-            this.groupBox1.Controls.Add(quan); y += 25;
-
-            rr_quan.Location = new System.Drawing.Point(x + 10 + 240, y);y+=25;
-            rr_quan.Size = new System.Drawing.Size(120, 13);
-            this.groupBox1.Controls.Add(rr_quan);
+          
+           // y += 25;
+            // y+=25;
+            // rr_quan (input)
+            //quan (label)
 
             //button Run
             Button run = new Button();
@@ -215,8 +211,16 @@ namespace os_scheduler
         private void deactivate_unNecessary()
         {
             if (s.nprocess == 0) return;
-            if (Form1.s.method != "RR") this.rr_quan.Enabled = false;
-            else rr_quan.Enabled = true;
+            if (Form1.s.method != "RR")
+            {
+                this.rr_quan.Visible = false;
+                quan.Visible = false;
+            }
+            else
+            {
+                this.rr_quan.Visible = true;
+                quan.Visible = true;
+            }
 
             if (Form1.s.method != "Priority (non pre-emptive)" && Form1.s.method != "Priority (pre-emptive)")
             {
@@ -270,7 +274,7 @@ namespace os_scheduler
                 s += " - start: " + drawable_data[i].alaa_start.ToString();
                 s += "\n";
             }
-            //MessageBox.Show(s);
+            MessageBox.Show(s);
             //if time line is zero don't draw
             if (drawable_data.Last().alaa_start == 0 && drawable_data.Last().alaa_burst == 0)
             {
@@ -329,6 +333,7 @@ namespace os_scheduler
             //end real vals
             return drawable_data;
         }
+
        
     }
 }
