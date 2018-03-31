@@ -40,8 +40,7 @@ namespace os_scheduler
 
             start = temp.Last().arrival;
             end = start + temp.Last().burst;
-            output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst,
-                temp.Last().priority, start, end));
+            output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
             temp.RemoveAt(temp.Count - 1);
 
             while (temp.Count > 0)
@@ -198,9 +197,8 @@ namespace os_scheduler
                     {
                         subtemp.Sort(delegate(Process x, Process y)
                         {
-                            if (x.burst == y.burst) return 0;
-                            else if (x.burst < y.burst) return 1;
-                            else return -1;
+                            if (x.burst > y.burst) return -1;
+                            else return 1;
                         });
 
                         start = end;
@@ -219,9 +217,8 @@ namespace os_scheduler
 
             subtemp.Sort(delegate(Process x, Process y)
             {
-                if (x.burst == y.burst) return 0;
-                else if (x.burst < y.burst) return 1;
-                else return -1;
+                if (x.burst > y.burst) return -1;
+                else return 1;
             });
             while (subtemp.Count() > 0)
             {
@@ -278,9 +275,8 @@ namespace os_scheduler
                     {
                         subtemp.Sort(delegate(Process x, Process y)
                         {
-                            if (x.priority == y.priority) return 0;
-                            else if (x.priority < y.priority) return 1;
-                            else return -1;
+                            if (x.priority > y.priority) return -1;
+                            else return 1;
                         });
 
                         start = end;
@@ -299,9 +295,8 @@ namespace os_scheduler
 
             subtemp.Sort(delegate(Process x, Process y)
             {
-                if (x.priority == y.priority) return 0;
-                else if (x.priority < y.priority) return 1;
-                else return -1;
+                if (x.priority > y.priority) return -1;
+                else return 1;
             });
             while (subtemp.Count() > 0)
             {
@@ -377,7 +372,7 @@ namespace os_scheduler
         public void RR(int quantum)
         {
             List<Process> temp = new List<Process>(input);
-            List<Process> subtemp = new List<Process>(nprocess);
+            List<Process> subtemp = new List<Process>(nprocess + 1);
             for (int i = 0; i <= nprocess; ++i)
             {
                 subtemp.Add(new Process(0, 0, 0));

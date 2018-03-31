@@ -270,9 +270,16 @@ namespace os_scheduler
                 s += " - start: " + drawable_data[i].alaa_start.ToString();
                 s += "\n";
             }
-            MessageBox.Show(s);
-            Form2 chart = new Form2(drawable_data);
-            chart.ShowDialog();
+            //MessageBox.Show(s);
+            //if time line is zero don't draw
+            if (drawable_data.Last().alaa_start == 0 && drawable_data.Last().alaa_burst == 0)
+            {
+                MessageBox.Show("average waiting time: 0\nNo processes will be assigned to CPU");
+            }
+            else{
+                Form2 chart = new Form2(drawable_data);
+                chart.ShowDialog();
+            }
         }
 
         private List<alaa_data> get_drawable_data()//interface
