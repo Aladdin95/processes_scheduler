@@ -110,6 +110,7 @@ namespace os_scheduler
             int id;
             for (int i = drawable.Count-1 ; i >= 0; --i)
             {
+                if (drawable[i].alaa_process_id > Form1.s.nprocess) continue;
                 id = drawable[i].alaa_process_id-1;
                 if (leave_time_int[id] == -1)
                 {
@@ -121,6 +122,7 @@ namespace os_scheduler
             //waiting time
             for (int i = 0; i < Form1.s.nprocess; ++i)
             {
+                
                 wait_time_int[i] = leave_time_int[i]
                     - Form1.burst_int[i]
                     - Form1.arrival_int[i];
@@ -139,7 +141,7 @@ namespace os_scheduler
         {
             int r, g, b;
             Random m = new Random();
-            colors = new List<Color>(Form1.s.nprocess);
+            colors = new List<Color>(Form1.s.nprocess+1);
             for (int i = 0; i < Form1.s.nprocess+1; ++i)//more place for idle
             {
                 r = m.Next(30,255);

@@ -300,6 +300,7 @@ namespace os_scheduler
                 }
             }
             //calling functions
+            
             if (s.method == "FCFS") s.fcfs();
             else if (s.method == "Priority (non pre-emptive)") s.priority_non_preemptive();
             else if (s.method == "Priority (pre-emptive)") s.priority_preemptive();
@@ -307,7 +308,9 @@ namespace os_scheduler
             else if (s.method == "SJF (pre-emptive)") s.sjf_preemptive();
             else s.RR(rr_quan_int);
 
-            List<alaa_data> drawable_data = new List<alaa_data>(s.output.Count);
+            s.insert_idle();
+
+            List<alaa_data> drawable_data = new List<alaa_data>(s.output_with_idle.Count);
             //testing
                 //for (int i = 0; i < s.nprocess; i++)
                 //{
@@ -316,11 +319,11 @@ namespace os_scheduler
             //end testing
 
             //real values
-                for (int i = 0; i < s.output.Count; i++)
+                for (int i = 0; i < s.output_with_idle.Count; i++)
                 {
-                    drawable_data.Add(new alaa_data(s.output[i].start,
-                        s.output[i].end - s.output[i].start,
-                        s.output[i].id
+                    drawable_data.Add(new alaa_data(s.output_with_idle[i].start,
+                        s.output_with_idle[i].end - s.output_with_idle[i].start,
+                        s.output_with_idle[i].id
                         ));
                 }
             //end real vals

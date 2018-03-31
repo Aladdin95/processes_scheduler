@@ -13,6 +13,7 @@ namespace os_scheduler
         public int nprocess;
         public List<Process> input ; //new List<Process>(nprocess);
         public List<Process> output ;// new List<Process>(nprocess);
+        public List<Process> output_with_idle;
         public int start;
         public int end;
 
@@ -437,6 +438,31 @@ namespace os_scheduler
                 output.Add(new Process(subtemp[front].id, subtemp[front].arrival, subtemp[front].burst, subtemp[front].priority, start, end));
                 front = (front + 1) % (nprocess + 1);
             }
+        }
+
+        public void insert_idle()
+        {
+            int n = output.Count;
+            if (output[0].arrival > 0) ++n;
+            for (int i = 1; i < output.Count; ++i)
+                if (output[i].arrival > output[i - 1].end) ++n;
+
+            output_with_idle = new List<Process>(n);
+
+            if (output[0].arrival > 0)
+            {
+                output_with_idle.Add(new Process(input.Count + 1, 0, output[0].arrival, 0, 0, output[0].arrival));
+                output_with_idle.Add(output[0]);
+            }
+
+            for (int i = 1; i < output.Count; ++i)
+            {
+                if (output[i].arrival > output[i - 1].end)
+                    output_with_idle.Add(new Process(input.Count + 1, output[i - 1].end, output[i].arrival - output[i - 1].end, 0, output[i - 1].end, output[i].arrival));
+
+                output_with_idle.Add(output[i]);
+            }
+
         }
     }
 
