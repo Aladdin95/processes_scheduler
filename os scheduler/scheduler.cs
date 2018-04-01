@@ -394,6 +394,14 @@ namespace os_scheduler
                 {
                     if (front == rear)
                     {
+                        if (temp.Last().arrival < output.Last().end)
+                        {
+                            subtemp[rear] = new Process(output.Last());
+                            subtemp[rear].burst -= temp.Last().arrival - output.Last().start;
+                            rear = (rear + 1) % (nprocess + 1);
+                            output.Last().burst = temp.Last().arrival - output.Last().start;
+                            output.Last().end = temp.Last().arrival;
+                        }
                         start = temp.Last().arrival;
                         end = temp.Last().arrival + temp.Last().burst;
                         output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));

@@ -8,3 +8,13 @@ c:\users\abdullah\documents\visual studio 2012\Projects\os scheduler\os schedule
 c:\users\abdullah\documents\visual studio 2012\Projects\os scheduler\os scheduler\obj\Debug\os scheduler.exe
 c:\users\abdullah\documents\visual studio 2012\Projects\os scheduler\os scheduler\obj\Debug\os scheduler.pdb
 C:\Users\Abdullah\Documents\Visual Studio 2012\Projects\os scheduler\os scheduler\obj\Debug\os_scheduler.Form2.resources
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\bin\Debug\os scheduler.exe.config
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\obj\Debug\os scheduler.exe
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\obj\Debug\os scheduler.pdb
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\bin\Debug\os scheduler.exe
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\bin\Debug\os scheduler.pdb
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\obj\Debug\os scheduler.csprojResolveAssemblyReference.cache
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\obj\Debug\os_scheduler.Form1.resources
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\obj\Debug\os_scheduler.Form2.resources
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\obj\Debug\os_scheduler.Properties.Resources.resources
+C:\Users\Aladdin\Desktop\os github\processes_scheduler\os scheduler\obj\Debug\os scheduler.csproj.GenerateResource.Cache
