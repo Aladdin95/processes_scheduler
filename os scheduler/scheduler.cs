@@ -212,6 +212,7 @@ namespace os_scheduler
                         start = temp.Last().arrival;
                         end = temp.Last().arrival + temp.Last().burst;
                         output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
+                        temp.RemoveAt(temp.Count-1);
                     }
                 }
             }
@@ -290,6 +291,7 @@ namespace os_scheduler
                         start = temp.Last().arrival;
                         end = temp.Last().arrival + temp.Last().burst;
                         output.Add(new Process(temp.Last().id, temp.Last().arrival, temp.Last().burst, temp.Last().priority, start, end));
+                        temp.RemoveAt(temp.Count - 1);
                     }
                 }
             }
